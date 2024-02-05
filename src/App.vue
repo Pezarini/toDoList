@@ -1,16 +1,19 @@
 <template>
 	<div id="app">
 		<ProgressBar />
+		<AddTasks />
 	</div>
 </template>
 
 <script>
 import ProgressBar from '@/components/ProgressBar.vue'
+import AddTasks from '@/components/AddTasks.vue'
 
 export default {
 	name: 'App',
 	components: {
 		ProgressBar,
+		AddTasks
 	},
 }
 </script>
