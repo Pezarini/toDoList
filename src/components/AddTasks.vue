@@ -1,13 +1,30 @@
 <template>
+
   <div class="containerAddTasks">
-	<input type="text" placeholder="Write your task...">
+	<input v-model="task" type="text" placeholder="Write your task..." @keyup.enter="sendMessage" >
 	<input type="button" value=">" id="Button">
   </div>
+
 </template>
 
 <script>
-export default {
+import connectComponents from '@/connectComponents';
 
+export default {
+	data() {
+		return {
+			task: ''
+		}
+	},
+	methods: {
+		sendMessage() {
+			if (!this.task) {
+				return;
+			}
+			connectComponents.$emit('taskWriteByUser', this.task);
+			this.task = '';
+		}
+	},
 }
 </script>
 
