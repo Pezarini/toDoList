@@ -1,8 +1,8 @@
 <template>
 
   <div class="containerAddTasks">
-	<input v-model="task" type="text" placeholder="Write your task..." @keyup.enter="sendMessage" >
-	<input type="button" value=">" id="Button">
+	<input v-model="task" type="text" placeholder="Write your task..." @keyup.enter="sendTask" >
+	<input @click="sendTask" type="button" value=">" id="Button">
   </div>
 
 </template>
@@ -17,11 +17,11 @@ export default {
 		}
 	},
 	methods: {
-		sendMessage() {
+		sendTask() {
 			if (!this.task) {
 				return;
 			}
-			connectComponents.$emit('taskWriteByUser', this.task);
+			connectComponents.$emit('userWrittenTask', this.task);
 			this.task = '';
 		}
 	},

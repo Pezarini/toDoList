@@ -18,7 +18,7 @@ export default {
 		}
 	},
 	created() {
-		connectComponents.$on('taskWriteByUser', (task) => {
+		connectComponents.$on('userWrittenTask', (task) => {
 			this.task.push(task);
 		});
 	}
