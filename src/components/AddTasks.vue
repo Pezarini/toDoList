@@ -1,7 +1,7 @@
 <template>
 
   <div class="containerAddTasks">
-	<input v-model="task" type="text" placeholder="Write your task..." @keyup.enter="sendTask" >
+	<input v-model="taskInput" type="text" placeholder="Write your task..." @keyup.enter="sendTask" >
 	<input @click="sendTask" type="button" value=">" id="Button">
   </div>
 
@@ -13,16 +13,16 @@ import connectComponents from '@/connectComponents';
 export default {
 	data() {
 		return {
-			task: ''
+			taskInput: '',
 		}
 	},
 	methods: {
 		sendTask() {
-			if (!this.task) {
+			if (!this.taskInput) {
 				return;
 			}
-			connectComponents.$emit('userWrittenTask', this.task);
-			this.task = '';
+			connectComponents.$emit('taskInput', this.taskInput);
+			this.taskInput = '';
 		}
 	},
 }
