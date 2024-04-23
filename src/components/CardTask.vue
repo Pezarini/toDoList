@@ -6,8 +6,13 @@
 			v-for="(taskCard, index) in task"
 			:key="index"
 			:class="{'taskReady': task[index].conditional}"
-			@click="doneTask(index)">
-			<h2>{{ taskCard.text }}</h2>
+		>
+			<div 
+				class="textContentCard"
+				@click="doneTask(index)"
+			> 
+				<h2>{{ taskCard.text }}</h2>
+			</div>
 			<button class="buttonToRemove" @click="removeTask(index)">X</button>
 		</div>
 	</div>
@@ -31,17 +36,28 @@ export default {
 	},
 	methods: {
 		removeTask(index) {
+			if (this.task[index].conditional) {
+				this.tasksFinished--;
+			}
+
 			this.task.splice(index, 1);
-			this.task[index].conditional = false;
-			connectComponents.$emit('howManyTasks', this.task.length);
+
+			if (this.task.length === 0) {
+				this.tasksFinished = 0;
+			}
+
+			connectComponents.$emit('howManyTasks', {tasks: this.task.length, tasksFinished: this.tasksFinished});
 		},
 		doneTask(index) {
 			this.task[index].conditional = !this.task[index].conditional;
 	
 			if (!this.task[index].conditional) {
-				this.tasksFinished -= 2;
+				this.tasksFinished--;
 			}
-			this.tasksFinished += 1;
+			else {
+				this.tasksFinished++;	
+			}
+	
 			connectComponents.$emit('howManyTasks', {tasks: this.task.length, tasksFinished: this.tasksFinished});
 		},
 	}
@@ -55,7 +71,8 @@ export default {
 
 	.containerCardTasks {
 		margin-top: 60px;
-		width: 60%;
+		min-width: 60%;
+		width: auto;
 		height: auto;
 		display: flex;
 		flex-wrap: wrap;
@@ -80,4 +97,6 @@ export default {
 	.taskReady {
 		background-color: rgb(27, 235, 27);
 	}
+
+
 </style>
