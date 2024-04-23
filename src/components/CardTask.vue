@@ -33,6 +33,17 @@ export default {
 		connectComponents.$on('taskInput', (task) => {
 			this.task.push({text: task, conditional: false});
 		});
+		const json = localStorage.getItem('task')
+		const taskIsArray = JSON.parse(json);
+		this.task = Array.isArray(taskIsArray) ? taskIsArray : [];
+	},
+	watch: {
+		task: {
+			deep: true,
+			handler() {
+				localStorage.setItem('task', JSON.stringify(this.task));
+			}
+		}
 	},
 	methods: {
 		removeTask(index) {
